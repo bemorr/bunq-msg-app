@@ -1,19 +1,26 @@
-### Write a very simple chat application backend in PHP. 
+### Write a very simple chat application backend in PHP.
 
-## Required:
+## Required: 
 
-* [ ] The users and messages should be stored in a simple SQLite database.
-* [ ] communication between the client and server should happen over a simple RESTful JSON API over HTTP(s) (which may be periodically refreshed to poll for new messages).
-* [ ] users should be identified by some token, username or ID in the HTTP messages and the database.
+- [x] The users and messages should be stored in a simple SQLite database.
+- [x] communication between the client and server should happen over a simple RESTful JSON API over HTTP(s) (which may be periodically refreshed to poll for new messages).
+- [x] users should be identified by some token, username or ID in the HTTP messages and the database.
 
-## Optional 
+## Not Required.
+- [x] A GUI
+- [ ] user registration
+- [ ] user login
 
+## Enhancements with more time.
+- [ ] Add required Unique username constraints and flow.
+- [ ] Split out JS functionality.
+- [ ] Benchmark websocket perf against API.
 
-## Not Required
-* [ ] A GUI 
-* [ ] user registration 
-* [ ] user login
+----------------
+## Language / Stack choice.
 
-## Language & Framework choice
-* [ ] PHP
-* [ ] sqlite DB
+- [x] PHP
+- [x] JS
+- [x] JQuery
+- [x] SQLite
+- [x] Composer
