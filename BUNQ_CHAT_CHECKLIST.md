@@ -3,7 +3,7 @@
 ## Required: 
 
 - [x] The users and messages should be stored in a simple SQLite database.
-- [x] communication between the client and server should happen over a simple RESTful JSON API over HTTP(s) (which may be periodically refreshed to poll for new messages).
+- [x] Communication between the client and server should happen over a simple RESTful JSON API over HTTP(s) (which may be periodically refreshed to poll for new messages).
 - [x] users should be identified by some token, username or ID in the HTTP messages and the database.
 
 ## Not Required.
@@ -18,7 +18,6 @@
 
 ----------------
 ## Language / Stack choice.
-
 - [x] PHP
 - [x] JS
 - [x] JQuery
