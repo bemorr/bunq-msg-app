@@ -1,5 +1,7 @@
 # bunq-msg-app - BunqsApp
 
+A simple messaging app built for the take home assessment for the role of junior back end enginer @ Bunq.
+
 ![BunqsApp Screenshot](public_html/assets/bunqsApp-img.png "BunqsApp in action!")
 
 ## Setup
