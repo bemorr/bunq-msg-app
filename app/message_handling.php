@@ -52,17 +52,28 @@ if (isset($_GET['req'])) :
         case 'fetchMsg':
             $my_user = $_POST['my_user'];
             $f_user = $_POST['f_user'];
+            
+            if (isset($_GET['reboot'])) {
+                $fetch_msg_select_stm = $db->prepare('SELECT * FROM messages WHERE recipient = ? AND "from" = ? OR recipient = ? AND "from" = ? ORDER BY id asc');
+                $fetch_msg_select_stm->bindParam(1, $my_user);
+                $fetch_msg_select_stm->bindParam(2, $f_user);
+                $fetch_msg_select_stm->bindParam(3, $f_user);
+                $fetch_msg_select_stm->bindParam(4, $my_user);
 
-            $fetch_msg_select_stm = $db->prepare('SELECT * FROM messages WHERE recipient = ? AND "from" = ? AND status=1 ORDER BY id desc LIMIT 1');
-            $fetch_msg_select_stm->bindParam(1, $my_user);
-            $fetch_msg_select_stm->bindParam(2, $f_user);
+            } else {
+                $fetch_msg_select_stm = $db->prepare('SELECT * FROM messages WHERE recipient = ? AND "from" = ? AND status=1 ORDER BY id desc LIMIT 1');
+                $fetch_msg_select_stm->bindParam(1, $my_user);
+                $fetch_msg_select_stm->bindParam(2, $f_user);
+            }
 
             $query_result = $fetch_msg_select_stm->execute();
-
+            $json = array();
             while ($row = $query_result->fetchArray()) {
-                $json = array('status' => 1, 'msg' => '<div class="sender">' .
-                    $row['from'] . '<hr>' .
-                    '</div>' . '<div>' . $row['msg'] . '</div>' . '<hr>', 'last_id' => $row['id'], 'time' => $row['time']);
+                $temp = array('status' => 1, 'msg' => '<div class="sender">' .
+                $row['from'] . '<hr>' .
+                '</div>' . '<div>' . $row['msg'] . '</div>' . '<hr>', 'last_id' => $row['id'], 'time' => $row['time']);
+                $json[] = $temp;
+                
             };
             // update status
             $update_msg_stm = $db->prepare('UPDATE messages SET status = 0 WHERE recipient = ? AND "from" = ?');

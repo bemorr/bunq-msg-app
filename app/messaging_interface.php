@@ -154,6 +154,49 @@ if (isset($_POST['my_user']) && isset($_POST['f_user'])) {
             checkStatus();
         }, 200);
 
+        function initializeChat() {
+            $f_user = '<?php echo $f_user; ?>';
+            $my_user = '<?php echo $my_user; ?>';
+            $.ajax({
+                type: 'post',
+                url: 'message_handling.php?req=fetchMsg&reboot=1',
+                data: {
+                    f_user: $f_user,
+                    my_user: $my_user
+                },
+                dataType: 'json',
+                success: function(res) {
+                    // if (resp.status == 0) {
+                    //     alert(resp.msg);
+                    // } else if (resp.status == 1) {
+                        res.forEach(function(resp) {
+                            $conversation_layout = '<div class="float-fix">' +
+                                '<div class="f-rply">' +
+                                '<div class="msg-bg">' +
+                                '<div class="msgA">' +
+                                resp.msg +
+                                '<div class="">' +
+                                '<div class="msg-time time-' + resp.last_id + '"></div>' +
+                                '<div class="myrply-f"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+                            $('#cstream').append($conversation_layout);
+                            $('.time-' + resp.last_id).livestamp();
+                            $('#dataHelper').attr('last-id', resp.last_id);
+                        })
+                        $('#chat').scrollTop($('#cstream').height());
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+        initializeChat();
+
         function getMsg() {
             $f_user = '<?php echo $f_user; ?>';
             $my_user = '<?php echo $my_user; ?>';
@@ -165,28 +208,26 @@ if (isset($_POST['my_user']) && isset($_POST['f_user'])) {
                     my_user: $my_user
                 },
                 dataType: 'json',
-                success: function(resp) {
-                    if (resp.status == 0) {
-                        alert(resp.msg);
-                    } else if (resp.status == 1) {
-                        $conversation_layout = '<div class="float-fix">' +
-                            '<div class="f-rply">' +
-                            '<div class="msg-bg">' +
-                            '<div class="msgA">' +
-                            resp.msg +
-                            '<div class="">' +
-                            '<div class="msg-time time-' + resp.last_id + '"></div>' +
-                            '<div class="myrply-f"></div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                        $('#cstream').append($conversation_layout);
+                success: function(res) {
+                    res.forEach(function(resp) {
+                            $conversation_layout = '<div class="float-fix">' +
+                                '<div class="f-rply">' +
+                                '<div class="msg-bg">' +
+                                '<div class="msgA">' +
+                                resp.msg +
+                                '<div class="">' +
+                                '<div class="msg-time time-' + resp.last_id + '"></div>' +
+                                '<div class="myrply-f"></div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+                            $('#cstream').append($conversation_layout);
+                            $('.time-' + resp.last_id).livestamp();
+                            $('#dataHelper').attr('last-id', resp.last_id);
+                        })
                         $('#chat').scrollTop($('#cstream').height());
-                        $('.time-' + resp.last_id).livestamp();
-                        $('#dataHelper').attr('last-id', resp.last_id);
-                    }
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText);
