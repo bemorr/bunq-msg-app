@@ -15,6 +15,7 @@
 - [ ] Add required Unique username constraints and flow.
 - [ ] Split out JS functionality.
 - [ ] Benchmark websocket perf against API.
+- [ ] Fix timestamps on fetched archive messages.
 
 ----------------
 ## Language / Stack choice.
